@@ -6,7 +6,7 @@ def is_divisible(n):
 
 
 def smallest_prefect_int():
-    k = 9699690
+    k = 27907200  # I chose this number because it's the product of {15,16,17,18,19,20} but is not divisible by 14
     n = k
     temp = k
     while not is_divisible(n):
@@ -16,5 +16,4 @@ def smallest_prefect_int():
 
 
 print(smallest_prefect_int())
-#answer: 232792560
-
+# answer: 232792560
