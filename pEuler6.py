@@ -19,3 +19,4 @@ p = square_of_sum(100)
 m = sum_square(100)
 
 print(p - m)
+#answer: 25164150
