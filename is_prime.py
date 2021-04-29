@@ -1,6 +1,8 @@
 import math
 
 def is_prime(n):
+    if n == 2:
+        retuen True
     if n % 2 == 0:
         return False
     else:
@@ -10,4 +12,6 @@ def is_prime(n):
                 return False
         return True
 
+    
 # assert is_prime(2) == True # This this assertion fails!
+#mfixed it
