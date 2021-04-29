@@ -43,4 +43,4 @@ def fibonacci_even_terms():
 
 print(fibonacci_even_terms())
 print(f'fib_usage_counter: {fib_usage_counter}')
-# fib_usage_counter: 73
+# fib_usage_counter: 1197
