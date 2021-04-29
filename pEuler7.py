@@ -1,18 +1,6 @@
 import math
 
-
-# I tried to create a file called "is_prime" and to import it but it was not working. tommorow I'll figure that out.
-
-def is_prime(n):
-    if n % 2 == 0:
-        return False
-    else:
-        t = math.sqrt(n)
-        for i in range(2, int(t) + 1):
-            if n % i == 0:
-                return False
-        return True
-
+from is_prime import is_prime
 
 def the_nth_prime(n):
     counter = 1
