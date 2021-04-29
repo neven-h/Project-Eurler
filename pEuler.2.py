@@ -13,16 +13,16 @@ fib_usage_counter = 0
 # calculating the Fibonacci sequence without recursion
 def fib(n: int) -> int:
     global fib_usage_counter
-    fib_usage_counter += 1
     if n == 0: return 0
     value1, value2 = 1, 1
     while n > 2:
+        fib_usage_counter += 1
         value1, value2 = value2, value1 + value2
         n -= 1
     return value2
 
 
-# find the index of the Fibonacchi number which is our upper bound
+# find the index of the Fibonacci number which is our upper bound
 def find_fibonacci_bound():
     k = 5
     bound = 4000000
@@ -34,13 +34,11 @@ def find_fibonacci_bound():
 
 def fibonacci_even_terms():
     upper_range = find_fibonacci_bound()
-    summtion = 0
-    fibo_list = []
+    fibonacci_sum = 0
     for i in range(2, upper_range):
         if fib(i) % 2 == 0:
-            fibo_list.append(fib(i))
-    summtion = sum(fibo_list)
-    print(summtion)
+            fibonacci_sum += fib(i)
+    print(fibonacci_sum)
 
 
 print(fibonacci_even_terms())
