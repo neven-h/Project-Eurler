@@ -17,24 +17,28 @@ def fib(n: int) -> int:
     value1, value2 = 1, 1
     while n > 2:
         fib_usage_counter += 1
+        # print(fib_usage_counter)
         value1, value2 = value2, value1 + value2
         n -= 1
     return value2
 
 
 # find the index of the Fibonacci number which is our upper bound
-def find_fibonacci_bound():
-    k = 5
-    bound = 4000000
-    while fib(k) < bound:
-        k += 1
-    else:
-        return k
+# for k=34, fb_usage_counter is minimal (and the correct answer for sum of even fibonacci numbers under 4 milion)
+#  and equals fib_usage_counter = 704
+# def find_fibonacci_bound():
+#     k = 34  # the change that improved fib_usage_counter
+#     bound = 4000000
+#     if fib(k) < bound:
+#         k += 1
+#     else:
+#         return k
 
-
+# by defining the uppoer bound to be 34 (without using find_fibonacci_bound()), I decreased fib_usage_counter to 672
 def fibonacci_even_terms():
-    upper_range = find_fibonacci_bound()
+    # upper_range = find_fibonacci_bound()
     fibonacci_sum = 0
+    upper_range = 34
     for i in range(2, upper_range):
         if fib(i) % 2 == 0:
             fibonacci_sum += fib(i)
@@ -43,4 +47,4 @@ def fibonacci_even_terms():
 
 print(fibonacci_even_terms())
 print(f'fib_usage_counter: {fib_usage_counter}')
-# fib_usage_counter: 1197
+# fib_usage_counter: 73
