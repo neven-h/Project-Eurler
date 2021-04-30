@@ -2,7 +2,7 @@ import math
 
 def is_prime(n):
     if n == 2:
-        retuen True
+        return True
     if n % 2 == 0:
         return False
     else:
