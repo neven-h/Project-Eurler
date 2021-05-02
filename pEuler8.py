@@ -58,7 +58,7 @@ def count_what_digit(list, digit):
 
 sub_lists_thousandDigits = str_split(thousandDigits, 0)
 
-
+# this function supposed to return only the sub lists which their length is greater then 13, but it does it only partlly. 
 def remove_minimal_sub_lists(list_of_lists):
     new_list_of_lists = list_of_lists
     for sub_string in list_of_lists:
