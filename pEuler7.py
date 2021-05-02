@@ -1,21 +1,34 @@
-import math
+from sieve_is_prime import make_sieve
 
-from is_prime import is_prime
 
-def the_nth_prime(n):
+def number_of_primes(sieve):
+    return sum(sieve)
+
+
+def sieve_n_primes(n):
+    sieve = [0]
+    while number_of_primes(sieve) < n:
+        sieve = make_sieve(10 * len(sieve))
+    return sieve
+
+
+def is_prime_using_sieve(sieve, n):
+    if sieve[n] == 1:
+        return True
+    return False
+
+
+def nth_prime(n):
     counter = 1
     prime = 2
-    t = n * n
-    i: int
-    for i in range(3, t // 950, 2):
-        # I've chosen the range to be n^2// 950 because for this given number we're getting
-        # the correct answer with pretty good runtime
-        # but it should probably be a function of n :/
-        if is_prime(i) and counter < n:
+    i = 3
+    sieve = sieve_n_primes(n)
+    while counter < n:
+        if is_prime_using_sieve(sieve, i):
             counter += 1
             prime = i
+        i += 1
     return prime
 
 
-print(the_nth_prime(10001))
-# answer: 104743
+print(nth_prime(10001))
