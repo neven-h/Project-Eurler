@@ -1,3 +1,5 @@
+from typing import List, Any
+
 import numpy as np
 
 thousandDigits = [7, 3, 1, 6, 7, 1, 7, 6, 5, 3, 1, 3, 3, 0, 6, 2, 4, 9, 1, 9, 2, 2, 5, 1, 1, 9, 6, 7, 4, 4, 2, 6, 5, 7,
@@ -44,16 +46,6 @@ def str_split(string, c):
     return result
 
 
-def count_what_digit(digit_list, digit):
-    counter: int = 0
-    list_of_digits: digit_list[int] = []
-    for i in range(len(digit_list)):
-        if digit == digit_list[i]:
-            # counter += 1
-            list_of_digits.append(i)
-    return counter
-
-
 def calc_running_prod(v, n):
     """
     Calculate the running products for array
@@ -73,21 +65,16 @@ sub_lists_thousandDigits = str_split(thousandDigits, 0)
 
 
 def remove_minimal_sub_lists(list_of_lists):
-    new_list_of_lists = []
-    list_of_length = []
+    new_list_of_lists: list[Any] = []
     for sub_string in list_of_lists:
         n = 13
-        if len(sub_string) >= 13:
+        if len(sub_string) >= n:
+            assert isinstance(sub_string, object)
             new_list_of_lists.append(sub_string)
-            list_of_length.append(len(sub_string))
-            # print(len(sub_string), sub_string)
-    return new_list_of_lists, list_of_length
+    return new_list_of_lists
 
 
-thousandDigits_zero_split, _ = remove_minimal_sub_lists(sub_lists_thousandDigits)
-
-
-# print(thousandDigits_zero_split)
+thousandDigits_zero_split = remove_minimal_sub_lists(sub_lists_thousandDigits)
 
 
 def final_prod(v, n):
