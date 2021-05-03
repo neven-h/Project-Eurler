@@ -1,3 +1,5 @@
+import numpy as np
+
 thousandDigits = [7, 3, 1, 6, 7, 1, 7, 6, 5, 3, 1, 3, 3, 0, 6, 2, 4, 9, 1, 9, 2, 2, 5, 1, 1, 9, 6, 7, 4, 4, 2, 6, 5, 7,
                   4, 7, 4, 2, 3, 5, 5, 3, 4, 9, 1, 9, 4, 9, 3, 4, 9, 6, 9, 8, 3, 5, 2, 0, 3, 1, 2, 7, 7, 4, 5, 0, 6, 3,
                   2, 6, 2, 3, 9, 5, 7, 8, 3, 1, 8, 0, 1, 6, 9, 8, 4, 8, 0, 1, 8, 6, 9, 4, 7, 8, 8, 5, 1, 8, 4, 3, 8, 5,
@@ -42,35 +44,60 @@ def str_split(string, c):
     return result
 
 
-def count_what_digit(list, digit):
+def count_what_digit(digit_list, digit):
     counter: int = 0
-    list_of_digits: list[int] = []
-    for i in range(len(list)):
-        if digit == list[i]:
+    list_of_digits: digit_list[int] = []
+    for i in range(len(digit_list)):
+        if digit == digit_list[i]:
             # counter += 1
             list_of_digits.append(i)
     return counter
 
 
-# if __name__ == "__main__":
-#     print("Test:")
-#     print(str_split(thousandDigits, 0))
+def calc_running_prod(v, n):
+    """
+    Calculate the running products for array
+    :param v: list of numbers
+    :param n: window size
+    :return: list of products, length = len(v) - n
+    """
+    p = [1]
+    for i in range(n):
+        p[0] *= v[i]
+    for i in range(1, len(v) - n + 1):
+        p.append(p[-1] / v[i - 1] * v[i + n - 1])
+    return p
+
 
 sub_lists_thousandDigits = str_split(thousandDigits, 0)
 
-# this function supposed to return only the sub lists which their length is greater then 13, but it does it only partlly. 
+
 def remove_minimal_sub_lists(list_of_lists):
-    new_list_of_lists = list_of_lists
+    new_list_of_lists = []
+    list_of_length = []
     for sub_string in list_of_lists:
         n = 13
-        if len(sub_string) < n:
-            new_list_of_lists.remove(sub_string)
-        # for i in new_list_of_lists:
-        #     if i == []:
-        #         new_list_of_lists.remove(i)
-    return new_list_of_lists
+        if len(sub_string) >= 13:
+            new_list_of_lists.append(sub_string)
+            list_of_length.append(len(sub_string))
+            # print(len(sub_string), sub_string)
+    return new_list_of_lists, list_of_length
 
 
-thousandDigits_zero_split = (remove_minimal_sub_lists(sub_lists_thousandDigits))
-print((thousandDigits_zero_split))
-# [[7, 3, 1, 6, 7, 1, 7, 6, 5, 3, 1, 3, 3], [6, 2, 4, 9, 1, 9, 2, 2, 5, 1, 1, 9, 6, 7, 4, 4, 2, 6, 5, 7, 4, 7, 4, 2, 3, 5, 5, 3, 4, 9, 1, 9, 4, 9, 3, 4, 9, 6, 9, 8, 3, 5, 2], [6, 3, 2, 6, 2, 3, 9, 5, 7, 8, 3, 1, 8], [1, 8, 6, 9, 4, 7, 8, 8, 5, 1, 8, 4, 3, 8, 5, 8, 6, 1, 5, 6], [7, 8, 9, 1, 1, 2, 9, 4, 9, 4, 9, 5, 4, 5, 9, 5], [1, 7, 3, 7, 9, 5, 8, 3, 3, 1, 9, 5, 2, 8, 5, 3, 2], [5, 5, 1, 1, 1, 2, 5, 4], [6, 9, 8, 7, 4, 7, 1, 5, 8, 5, 2, 3, 8, 6, 3], [7, 1, 5, 6, 9, 3, 2, 9], [4, 3, 5, 5, 7, 6, 6, 8, 9, 6, 6, 4, 8, 9, 5], [4, 4, 5, 2, 4, 4, 5, 2, 3, 1, 6, 1, 7, 3, 1, 8, 5, 6, 4], [9, 8, 7, 1, 1, 1, 2, 1, 7, 2, 2, 3, 8, 3, 1, 1, 3, 6, 2, 2, 2, 9, 8, 9, 3, 4, 2, 3, 3, 8], [8, 1, 3, 5, 3, 3, 6, 2, 7, 6, 6, 1, 4, 2, 8, 2, 8], [6, 4, 4, 4, 4, 8, 6, 6, 4, 5, 2, 3, 8, 7, 4, 9, 3], [7, 2, 9, 6, 2, 9], [4, 4], [7, 1, 3, 8, 1], [7, 9, 6], [1, 7, 2, 4, 2, 7, 1, 2, 1, 8, 8, 3, 9, 9, 8, 7, 9, 7, 9], [1, 6, 9, 9, 7, 2], [9, 3, 7, 7, 6, 6, 5, 7, 2, 7, 3, 3, 3], [1], [2, 3, 5, 4, 2, 1, 8], [5, 9, 4, 7, 5, 2, 2, 4, 3, 5, 2, 5, 8, 4, 9], [5, 5, 6], [4, 8, 3, 9, 5, 8, 6, 4, 4, 6, 7], [6, 3, 2, 4, 4, 1, 5, 7, 2, 2, 1, 5, 5, 3, 9, 7, 5, 3, 6, 9, 7, 8, 1, 7, 9, 7, 7, 8, 4, 6, 1, 7, 4], [8, 6, 2, 5, 6, 9, 3, 2, 1, 9, 7, 8, 4, 6, 8, 6, 2, 2, 4, 8, 2, 8, 3, 9, 7, 2, 2, 4, 1, 3, 7, 5, 6, 5, 7], [5, 7, 4, 9], [7, 9, 7, 2, 9, 6, 8, 6, 5, 2, 4, 1, 4, 5, 3, 5, 1], [4, 7, 4, 8, 2, 1, 6, 6, 3, 7], [3, 1, 9, 9, 8, 9], [6, 5, 8, 5, 4, 1, 2, 2, 7, 5, 8, 8, 6, 6, 6, 8, 8, 1, 1, 6, 4, 2, 7, 1, 7, 1, 4, 7, 9, 9, 2, 4, 4, 4, 2, 9, 2, 8, 2, 3], [8, 6, 3, 4, 6, 5, 6, 7, 4, 8, 1, 3, 9, 1, 9, 1, 2, 3, 1, 6, 2, 8, 2, 4, 5, 8, 6, 1, 7, 8, 6, 6, 4, 5, 8, 3, 5, 9, 1, 2, 4, 5, 6, 6, 5, 2, 9, 4, 7, 6, 5, 4, 5, 6, 8, 2, 8, 4, 8, 9, 1, 2, 8, 8, 3, 1, 4, 2, 6], [2, 2, 6, 7, 1], [9, 3, 7], [6, 9, 4, 1, 6, 5, 8, 9, 6], [8], [3, 8, 5], [9, 6, 2, 4, 5, 5, 4, 4, 4, 3, 6, 2, 9, 8, 1, 2, 3], [9, 8, 7, 8, 7, 9, 9, 2, 7, 2, 4, 4, 2, 8, 4, 9], [1, 5, 6, 1, 6, 6], [9, 7, 9, 1, 9, 1, 3, 3, 8, 7, 5, 4, 9, 9, 2], [], [5, 2, 4], [7, 1, 7, 6], [5, 8, 8, 6, 1, 1, 6, 4, 6, 7, 1], [5], [], [], [], [5, 5, 9, 3, 5, 7, 2, 9, 7, 2, 5, 7, 1, 6, 3, 6, 2, 6, 9, 5, 6, 1, 8, 8, 2, 6, 7], [], [4, 2]]
+thousandDigits_zero_split, _ = remove_minimal_sub_lists(sub_lists_thousandDigits)
+
+
+# print(thousandDigits_zero_split)
+
+
+def final_prod(v, n):
+    max_val = 0
+    for i, u in enumerate(v):
+        p = calc_running_prod(u, n)
+        mxi = np.argmax(p)
+        if p[mxi] > max_val:
+            max_val = p[mxi]
+    return max_val
+
+
+print(final_prod(thousandDigits_zero_split, 13))
